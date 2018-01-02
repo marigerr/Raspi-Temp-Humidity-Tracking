@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Chart{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block content %}
+<div id="chart">
+    <embed type="image/svg+xml" src= {{ chart|safe }} />
+ </div>
+{% endblock %}

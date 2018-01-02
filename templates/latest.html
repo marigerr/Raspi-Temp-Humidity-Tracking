@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Current{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block content %}
+  <h1>Most Recent Reading</h1> 
+  <p>Recorded at {{ current.date }} </p>
+  <p>Outdoor Temp {{ current.outdoorTemp }}&#176;C </p>
+  <p>Outdoor Humidity {{ current.outdoorHumidity }} % </p>
+  <p>Indoor Humidity {{ current.humidity }} % </p>
+  <p>Indoor Temp {{ current.temp }}&#176;C</p>
+{% endblock %}

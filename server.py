@@ -1,7 +1,8 @@
 import json, pygal, ConfigParser, datetime
 from bson import json_util, ObjectId
+import pymongo
 from pymongo import MongoClient
-from flask import Flask
+from flask import Flask, render_template
 
 configParser = ConfigParser.RawConfigParser()   
 configParser.read('config.ini')
@@ -43,7 +44,14 @@ def chart():
   chart.add('Rel Humidity Indoors (%)', humidity)
   chart.add('Temp Indoors (C)', temp)
   chart.add('Temp Outdoors (C)', outdoorTemp)
-  return chart.render_response()
+  chart = chart.render_data_uri()
+  return render_template( 'chart.html', chart = chart)
+
+@app.route('/latest')
+def current():
+    current = json.loads(json_util.dumps(collection.find().sort("date", pymongo.DESCENDING).limit(1)))[0]
+    current['date'] = datetime.datetime.fromtimestamp(current['date']['$date']/1000).strftime('%d %b %H:00')
+    return render_template( 'latest.html', current = current)
 
 if __name__ == '__main__':
 	app.run(debug=True, host='0.0.0.0')
