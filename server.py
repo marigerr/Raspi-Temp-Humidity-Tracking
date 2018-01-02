@@ -34,15 +34,15 @@ def chart():
     temp.append(result['temp'])
     outdoorTemp.append(result['outdoorTemp'])
     outdoorHumidity.append(result['outdoorHumidity'])
-    date.append(datetime.datetime.fromtimestamp(result['date']['$date']/1000).strftime('%b %d kl %H'))
+    date.append(datetime.datetime.fromtimestamp(result['date']['$date']/1000).strftime('%b %d %H:00'))
 
-  chart = pygal.Line(truncate_legend=50, explicit_size = True, x_label_rotation=20)
+  chart = pygal.Line(truncate_legend=50, x_label_rotation=45, height=300)
   chart.x_labels = date
   chart.title = 'Humidity & Temperature'
-  chart.add('Humidity Outdoors', outdoorHumidity)
-  chart.add('Humidity Indoor', humidity)
-  chart.add('Temp Indoor', temp)
-  chart.add('Temp Outdoors', outdoorTemp)
+  chart.add('Rel Humidity Outdoors (%)', outdoorHumidity)
+  chart.add('Rel Humidity Indoors (%)', humidity)
+  chart.add('Temp Indoors (C)', temp)
+  chart.add('Temp Outdoors (C)', outdoorTemp)
   return chart.render_response()
 
 if __name__ == '__main__':
