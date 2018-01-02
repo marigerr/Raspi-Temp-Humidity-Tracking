@@ -35,7 +35,7 @@ def chart():
     temp.append(result['temp'])
     outdoorTemp.append(result['outdoorTemp'])
     outdoorHumidity.append(result['outdoorHumidity'])
-    date.append(datetime.datetime.fromtimestamp(result['date']['$date']/1000).strftime('%b %d %H:00'))
+    date.append(datetime.datetime.fromtimestamp(result['date']['$date']/1000).strftime('%d %b %H:00'))
 
   chart = pygal.Line(truncate_legend=50, x_label_rotation=45, height=300)
   chart.x_labels = date
