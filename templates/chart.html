@@ -6,11 +6,11 @@
 {% block content %}
 <div id="latest">
   <p>
-    Most Recent Reading - {{ current.date }} <br>
-    Indoor Temp {{ current.temp|round|int }}&#176;C
-    Indoor Humidity {{ current.humidity|round|int }} % <br>
-    Outdoor Temp {{ current.outdoorTemp|round|int }}&#176;C 
-    Outdoor Humidity {{ current.outdoorHumidity|round|int }} % 
+    Latest {{ current.date }} <br>
+    Indoors: Temp {{ current.temp|round|int }}&#176;C
+    Humidity {{ current.humidity|round|int }} % <br>
+    Outdoors: Temp {{ current.outdoorTemp|round|int }}&#176;C 
+    Humidity {{ current.outdoorHumidity|round|int }} % 
   </p>
 </div>
 <div id="chart">
