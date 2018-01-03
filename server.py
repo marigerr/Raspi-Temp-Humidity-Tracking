@@ -1,4 +1,5 @@
 import json, pygal, ConfigParser, datetime
+from pygal.style import Style
 from bson import json_util, ObjectId
 import pymongo
 from pymongo import MongoClient
@@ -37,7 +38,11 @@ def chart():
     outdoorHumidity.append(result['outdoorHumidity'])
     date.append(datetime.datetime.fromtimestamp(result['date']['$date']/1000).strftime('%d %b %H:00'))
 
-  chart = pygal.Line(truncate_legend=50, x_label_rotation=45, height=300)
+  custom_style = Style(
+    font_family ='Raleway, sans-serif',
+    background='transparent'
+  )
+  chart = pygal.Line(truncate_legend=50, x_label_rotation=45, height=300, style=custom_style)
   chart.x_labels = date
   chart.title = 'Humidity & Temperature'
   chart.add('Rel Humidity Outdoors (%)', outdoorHumidity)
