@@ -44,8 +44,11 @@ def chart():
   chart.add('Rel Humidity Indoors (%)', humidity)
   chart.add('Temp Indoors (C)', temp)
   chart.add('Temp Outdoors (C)', outdoorTemp)
+  last = len(humidity) - 1
+  current = { 'humidity': humidity[last], 'temp': temp[last], 'outdoorHumidity': outdoorHumidity[last], 'outdoorTemp': outdoorTemp[last], 'date': date[last] }
+
   chart = chart.render_data_uri()
-  return render_template( 'chart.html', chart = chart)
+  return render_template( 'chart.html', chart = chart, current = current)
 
 @app.route('/latest')
 def current():

@@ -4,6 +4,15 @@
     {{ super() }}
 {% endblock %}
 {% block content %}
+<div id="latest">
+  <p>
+    Most Recent Reading - {{ current.date }} <br>
+    Indoor Temp {{ current.temp|round|int }}&#176;C
+    Indoor Humidity {{ current.humidity|round|int }} % <br>
+    Outdoor Temp {{ current.outdoorTemp|round|int }}&#176;C 
+    Outdoor Humidity {{ current.outdoorHumidity|round|int }} % 
+  </p>
+</div>
 <div id="chart">
     <embed type="image/svg+xml" src= {{ chart|safe }} />
  </div>
