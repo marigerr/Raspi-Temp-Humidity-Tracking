@@ -2,12 +2,17 @@ body, html {
   font-family: 'Raleway', sans-serif;
 }
 
-#latest {
+#latest p {
   margin-left: 15px;
+  margin-bottom: 0px;
 }
 
 @media only screen and (max-width: 700px) {
   body, html {
     font-size: 10px;
   }
+
+  #latest p {
+    margin-left: 10px;
+  }  
 }
