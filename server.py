@@ -28,22 +28,28 @@ def chart():
   outdoorTemp = []
   outdoorHumidity = []
   date = []
+  xlabels = []
 
   results = json.loads(json_util.dumps(collection.find()))
-
+  i = -2
   for result in results:
     humidity.append(result['humidity'])
     temp.append(result['temp'])
     outdoorTemp.append(result['outdoorTemp'])
     outdoorHumidity.append(result['outdoorHumidity'])
     date.append(datetime.datetime.fromtimestamp(result['date']['$date']/1000).strftime('%d %b %H:00'))
+    if (i==0) or (i%6 == 0):
+      xlabels.append(datetime.datetime.fromtimestamp(result['date']['$date']/1000).strftime('%d %b %H:00'))
+    i= i+1
 
   custom_style = Style(
     font_family ='Raleway, sans-serif',
     background='transparent'
   )
-  chart = pygal.Line(truncate_legend=50, x_label_rotation=45, height=300, style=custom_style)
+
+  chart = pygal.Line(truncate_legend=50, x_label_rotation=45, height=300, style=custom_style, show_minor_x_labels=False)
   chart.x_labels = date
+  chart.x_labels_major = xlabels
   chart.title = 'Humidity & Temperature'
   chart.add('Rel Humidity Outdoors (%)', outdoorHumidity)
   chart.add('Rel Humidity Indoors (%)', humidity)
