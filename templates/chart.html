@@ -6,7 +6,7 @@
 {% block content %}
 <div id="latest">
   <p>
-    Latest {{ current.date }} <br>
+    {{ current.date }} <br>
     Indoors: Temp {{ current.temp|round|int }}&#176;C
     Humidity {{ current.humidity|round|int }} % <br>
     Outdoors: Temp {{ current.outdoorTemp|round|int }}&#176;C 
