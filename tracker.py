@@ -3,6 +3,9 @@ import sys, ConfigParser, json, time, Adafruit_DHT, datetime, signal
 from urllib import urlopen
 from pymongo import MongoClient
 
+configParser = ConfigParser.RawConfigParser()
+configParser.read('config.ini')
+
 DB_HOST = configParser.get('DATABASE', 'DB_HOST')
 DB_PORT = configParser.getint('DATABASE', 'DB_PORT')
 DB_NAME = configParser.get('DATABASE', 'DB_NAME')
@@ -33,8 +36,10 @@ api = "http://api.openweathermap.org/data/2.5/weather?"
 lat = "lat=" + str(MY_LAT)
 lon = "lon=" + str(MY_LON)
 units = "units=" + 'metric'
-apikey = "OPEN_WEATHER_KEY"
+apikey = OPEN_WEATHER_KEY
 urlString = ''.join([api, lat, "&", lon, "&appid=", apikey, "&", units])
+
+print(urlString)
 
 while True:
   outdoorWeather = json.loads(urlopen(urlString).read())
