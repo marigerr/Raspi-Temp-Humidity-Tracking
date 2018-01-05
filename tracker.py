@@ -1,10 +1,10 @@
 #!/usr/bin/python
-import sys, ConfigParser, json, time, Adafruit_DHT, datetime, signal
+import sys, os, ConfigParser, json, time, Adafruit_DHT, datetime, signal
 from urllib import urlopen
 from pymongo import MongoClient
 
 configParser = ConfigParser.RawConfigParser()
-configParser.read('config.ini')
+configParser.read(os.path.join(os.path.abspath(os.path.dirname(__file__)), 'config.ini'))
 
 DB_HOST = configParser.get('DATABASE', 'DB_HOST')
 DB_PORT = configParser.getint('DATABASE', 'DB_PORT')
