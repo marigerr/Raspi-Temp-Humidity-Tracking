@@ -1,6 +1,6 @@
 ## Track Humidity and Temperature with Raspberry Pi and DHT11 sensor
 
-Run ```Tracker.py``` as cron task  
+Run ```Tracker.py``` script as cron task  
 Setup with ```crontab -e```  
 View existing tasks with ```crontab -l```
 
@@ -17,5 +17,32 @@ More info at https://www.raspberrypi.org/documentation/linux/usage/cron.md
 ```
 
 ## View Chart of data
-Run ```python server.py``` to start server  
-Can run server on rasppi and then view chart over local network using raspi's ip address and port.
+Start server with ```python server.py```  
+Can run server on Rasp Pi and then view chart from other machines on local network using Rasp Pi's ip address and default port 5000.
+
+## Start chart server at Raspberry Pi boot
+
+Add service to systemd to run ```server.py``` when starting up Rasp Pi and restart if fails.  
+Instructions at:  https://www.raspberrypi.org/documentation/linux/usage/systemd.md
+
+Example of chartserver.service
+```
+[Unit]
+Description=ChartHumidityTempData
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python2.7 -u server.py
+WorkingDirectory=/Absolute/Path/To/Server/Folder
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+RestartSec=10
+User=pi
+
+[Install]
+WantedBy=multi-user.target
+```
+
+After copying into systemd folder and enabling, will receive confirmation msg:   
+```Created symlink /etc/systemd/system/multi-user.target.wants/chartserver.service → /lib/systemd/system/chartserver.service.```
