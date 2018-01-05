@@ -1,4 +1,4 @@
-import json, pygal, ConfigParser, datetime
+import os, json, pygal, ConfigParser, datetime
 from pygal.style import Style
 from bson import json_util, ObjectId
 import pymongo
@@ -6,7 +6,7 @@ from pymongo import MongoClient
 from flask import Flask, render_template
 
 configParser = ConfigParser.RawConfigParser()   
-configParser.read('config.ini')
+configParser.read(os.path.join(os.path.abspath(os.path.dirname(__file__)), 'config.ini'))
 
 DB_HOST = configParser.get('DATABASE', 'DB_HOST')
 DB_PORT = configParser.getint('DATABASE', 'DB_PORT')
