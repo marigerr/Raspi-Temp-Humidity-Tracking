@@ -6,9 +6,10 @@ import os, ConfigParser
 configParser = ConfigParser.RawConfigParser()
 configParser.read(os.path.join(os.path.abspath(os.path.dirname(__file__)), 'config.ini'))
 
-hostname = os.environ.get('COMPUTERNAME') or os.environ.get('HOSTNAME')
+hostname = os.environ.get('COMPUTERNAME')
+homefolder =  os.environ.get('HOME')
 
-if (hostname == 'MARIGERR-PC' or hostname == 'raspberrypi'):
+if (hostname == 'MARIGERR-PC' or homefolder == '/home/pi'):
   DB_HOST = configParser.get('DATABASE', 'DB_HOST')
   DB_PORT = configParser.getint('DATABASE', 'DB_PORT')
   DB_NAME = configParser.get('DATABASE', 'DB_NAME')
