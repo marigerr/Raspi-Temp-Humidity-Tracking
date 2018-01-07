@@ -1,4 +1,9 @@
 #!/usr/bin/python
+
+# script for running on rasp pi to get temp and humidity from dht11 sensor
+# also does api call to get outdoors humidity and temp
+# then sends all data to database
+
 import traceback, json, time, Adafruit_DHT, datetime, signal
 from urllib import urlopen
 from pymongo import MongoClient

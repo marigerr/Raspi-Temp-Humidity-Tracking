@@ -1,4 +1,4 @@
-import json, pygal, datetime
+import os,json, pygal, datetime
 from pygal.style import Style
 from bson import json_util, ObjectId
 import pymongo
@@ -11,7 +11,7 @@ db = connection[settings.DB_NAME]
 db.authenticate(settings.DB_USER, settings.DB_PASS)
 collection = db[settings.DB_COLL]
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static', template_folder='templates')
 @app.route('/')
 def chart():
   humidity = []
