@@ -1,32 +1,19 @@
 #!/usr/bin/python
-import os, traceback, ConfigParser, json, time, Adafruit_DHT, datetime, signal
+import traceback, json, time, Adafruit_DHT, datetime, signal
 from urllib import urlopen
 from pymongo import MongoClient
+import settings
 
-configParser = ConfigParser.RawConfigParser()
-configParser.read(os.path.join(os.path.abspath(os.path.dirname(__file__)), 'config.ini'))
-
-DB_HOST = configParser.get('DATABASE', 'DB_HOST')
-DB_PORT = configParser.getint('DATABASE', 'DB_PORT')
-DB_NAME = configParser.get('DATABASE', 'DB_NAME')
-DB_USER = configParser.get('DATABASE', 'DB_USER')
-DB_PASS = configParser.get('DATABASE', 'DB_PASS')
-DB_COLL = configParser.get('DATABASE', 'DB_COLL')
-MY_LAT = configParser.getfloat('LOCATION', 'MY_LAT')
-MY_LON = configParser.getfloat('LOCATION', 'MY_LON')
-OPEN_WEATHER_KEY = configParser.get('APIKEYS', 'OPEN_WEATHER_KEY')
-LOG_FILE_PATH = configParser.get('LOGGING', 'LOG_FILE_PATH')
-
-path = LOG_FILE_PATH
+path = settings.LOG_FILE_PATH
 logfile = open(path, 'a')
 now = datetime.datetime.utcnow()
 
 def insertToDatabase(reading):
   try:
-    connection = MongoClient(DB_HOST, DB_PORT)
-    db = connection[DB_NAME]
-    db.authenticate(DB_USER, DB_PASS)
-    collection = db[DB_COLL]
+    connection = MongoClient(settings.DB_HOST, settings.DB_PORT)
+    db = connection[settings.DB_NAME]
+    db.authenticate(settings.DB_USER, settings.DB_PASS)
+    collection = db[settings.DB_COLL]
     collection.insert(reading)
     connection.close()
   except:
@@ -44,10 +31,10 @@ def insertToDatabase(reading):
     raise
 
 api = "http://api.openweathermap.org/data/2.5/weather?"
-lat = "lat=" + str(MY_LAT)
-lon = "lon=" + str(MY_LON)
+lat = "lat=" + str(settings.MY_LAT)
+lon = "lon=" + str(settings.MY_LON)
 units = "units=" + 'metric'
-apikey = OPEN_WEATHER_KEY
+apikey = settings.OPEN_WEATHER_KEY
 urlString = ''.join([api, lat, "&", lon, "&appid=", apikey, "&", units])
 
 outdoorWeather = json.loads(urlopen(urlString).read())
