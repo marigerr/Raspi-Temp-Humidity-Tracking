@@ -1,5 +1,5 @@
 #!/usr/bin/python
-import os, ConfigParser, json, time, Adafruit_DHT, datetime, signal
+import os, traceback, ConfigParser, json, time, Adafruit_DHT, datetime, signal
 from urllib import urlopen
 from pymongo import MongoClient
 
@@ -15,14 +15,33 @@ DB_COLL = configParser.get('DATABASE', 'DB_COLL')
 MY_LAT = configParser.getfloat('LOCATION', 'MY_LAT')
 MY_LON = configParser.getfloat('LOCATION', 'MY_LON')
 OPEN_WEATHER_KEY = configParser.get('APIKEYS', 'OPEN_WEATHER_KEY')
+LOG_FILE_PATH = configParser.get('LOGGING', 'LOG_FILE_PATH')
 
-connection = MongoClient(DB_HOST, DB_PORT)
-db = connection[DB_NAME]
-db.authenticate(DB_USER, DB_PASS)
-collection = db[DB_COLL]
+path = LOG_FILE_PATH
+logfile = open(path, 'a')
+now = datetime.datetime.utcnow()
 
-# path = PATH/TO/LOGGING/FILE
-# f = open(path, 'a')
+def insertToDatabase(reading):
+  try:
+    connection = MongoClient(DB_HOST, DB_PORT)
+    db = connection[DB_NAME]
+    db.authenticate(DB_USER, DB_PASS)
+    collection = db[DB_COLL]
+    collection.insert(reading)
+    connection.close()
+  except:
+    print "Error connecting to mlab"
+    reading['date'] = str(reading['date'])
+
+    logfile.write('\n------------------------\n\n')
+    logfile.write('ERROR CONNECTING TO MLAB\n')
+    logfile.write(now.strftime('%d %b %H:%M'))
+    logfile.write('\nData:')
+    logfile.write(json.dumps(reading))
+    logfile.write('\n')
+    logfile.write('\n')
+    logfile.write(traceback.format_exc())
+    raise
 
 api = "http://api.openweathermap.org/data/2.5/weather?"
 lat = "lat=" + str(MY_LAT)
@@ -35,7 +54,6 @@ outdoorWeather = json.loads(urlopen(urlString).read())
 outdoorTemp = outdoorWeather['main']['temp']
 outdoorHumidity = outdoorWeather['main']['humidity']
 humidity, temperature = Adafruit_DHT.read_retry(11, 4)
-now = datetime.datetime.utcnow()
 data = 'Temp: {0:0.1f} C  Humidity: {1:0.1f} %'.format(temperature, humidity)
 print now, data, outdoorTemp, outdoorHumidity
 reading = {"temp": temperature,
@@ -43,4 +61,4 @@ reading = {"temp": temperature,
           "outdoorTemp" : outdoorTemp,
           "outdoorHumidity" : outdoorHumidity,
           "date": now }
-collection.insert(reading)
+insertToDatabase(reading)

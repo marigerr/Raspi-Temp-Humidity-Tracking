@@ -1,0 +1,82 @@
+ERROR CONNECTING TO MLAB
+07 Jan 09:37
+Data:{"date": "2018-01-07 09:37:22.910137", "outdoorHumidity": 85, "outdoorTemp": -6.47, "temp": 24.0, "humidity": 33.0}
+Traceback (most recent call last):
+  File "tracker.py", line 28, in insertToDatabase
+    db.authenticate(DB_USER, DB_PASS)
+  File "/home/pi/.local/lib/python2.7/site-packages/pymongo/database.py", line 1167, in authenticate
+    connect=True)
+  File "/home/pi/.local/lib/python2.7/site-packages/pymongo/mongo_client.py", line 588, in _cache_credentials
+    sock_info.authenticate(credentials)
+  File "/home/pi/.local/lib/python2.7/site-packages/pymongo/pool.py", line 599, in authenticate
+    auth.authenticate(credentials, self)
+  File "/home/pi/.local/lib/python2.7/site-packages/pymongo/auth.py", line 486, in authenticate
+    auth_func(credentials, sock_info)
+  File "/home/pi/.local/lib/python2.7/site-packages/pymongo/auth.py", line 466, in _authenticate_default
+    return _authenticate_scram_sha1(credentials, sock_info)
+  File "/home/pi/.local/lib/python2.7/site-packages/pymongo/auth.py", line 209, in _authenticate_scram_sha1
+    res = sock_info.command(source, cmd)
+  File "/home/pi/.local/lib/python2.7/site-packages/pymongo/pool.py", line 496, in command
+    collation=collation)
+  File "/home/pi/.local/lib/python2.7/site-packages/pymongo/network.py", line 125, in command
+    parse_write_concern_error=parse_write_concern_error)
+  File "/home/pi/.local/lib/python2.7/site-packages/pymongo/helpers.py", line 146, in _check_command_response
+    raise OperationFailure(msg % errmsg, code, response)
+OperationFailure: Authentication failed.
+
+-----------------------
+ERROR CONNECTING TO MLAB
+07 Jan 09:38
+Data:{"date": "2018-01-07 09:38:53.366126", "outdoorHumidity": 85, "outdoorTemp": -6, "temp": 24.0, "humidity": 33.0}
+
+Traceback (most recent call last):
+  File "tracker.py", line 28, in insertToDatabase
+    db.authenticate(DB_USER, DB_PASS)
+  File "/home/pi/.local/lib/python2.7/site-packages/pymongo/database.py", line 1167, in authenticate
+    connect=True)
+  File "/home/pi/.local/lib/python2.7/site-packages/pymongo/mongo_client.py", line 588, in _cache_credentials
+    sock_info.authenticate(credentials)
+  File "/home/pi/.local/lib/python2.7/site-packages/pymongo/pool.py", line 599, in authenticate
+    auth.authenticate(credentials, self)
+  File "/home/pi/.local/lib/python2.7/site-packages/pymongo/auth.py", line 486, in authenticate
+    auth_func(credentials, sock_info)
+  File "/home/pi/.local/lib/python2.7/site-packages/pymongo/auth.py", line 466, in _authenticate_default
+    return _authenticate_scram_sha1(credentials, sock_info)
+  File "/home/pi/.local/lib/python2.7/site-packages/pymongo/auth.py", line 209, in _authenticate_scram_sha1
+    res = sock_info.command(source, cmd)
+  File "/home/pi/.local/lib/python2.7/site-packages/pymongo/pool.py", line 496, in command
+    collation=collation)
+  File "/home/pi/.local/lib/python2.7/site-packages/pymongo/network.py", line 125, in command
+    parse_write_concern_error=parse_write_concern_error)
+  File "/home/pi/.local/lib/python2.7/site-packages/pymongo/helpers.py", line 146, in _check_command_response
+    raise OperationFailure(msg % errmsg, code, response)
+OperationFailure: Authentication failed.
+
+
+------------------------
+ERROR CONNECTING TO MLAB
+07 Jan 09:40
+Data:{"date": "2018-01-07 09:40:16.565201", "outdoorHumidity": 85, "outdoorTemp": -6, "temp": 24.0, "humidity": 33.0}
+
+Traceback (most recent call last):
+  File "tracker.py", line 28, in insertToDatabase
+    db.authenticate(DB_USER, DB_PASS)
+  File "/home/pi/.local/lib/python2.7/site-packages/pymongo/database.py", line 1167, in authenticate
+    connect=True)
+  File "/home/pi/.local/lib/python2.7/site-packages/pymongo/mongo_client.py", line 588, in _cache_credentials
+    sock_info.authenticate(credentials)
+  File "/home/pi/.local/lib/python2.7/site-packages/pymongo/pool.py", line 599, in authenticate
+    auth.authenticate(credentials, self)
+  File "/home/pi/.local/lib/python2.7/site-packages/pymongo/auth.py", line 486, in authenticate
+    auth_func(credentials, sock_info)
+  File "/home/pi/.local/lib/python2.7/site-packages/pymongo/auth.py", line 466, in _authenticate_default
+    return _authenticate_scram_sha1(credentials, sock_info)
+  File "/home/pi/.local/lib/python2.7/site-packages/pymongo/auth.py", line 209, in _authenticate_scram_sha1
+    res = sock_info.command(source, cmd)
+  File "/home/pi/.local/lib/python2.7/site-packages/pymongo/pool.py", line 496, in command
+    collation=collation)
+  File "/home/pi/.local/lib/python2.7/site-packages/pymongo/network.py", line 125, in command
+    parse_write_concern_error=parse_write_concern_error)
+  File "/home/pi/.local/lib/python2.7/site-packages/pymongo/helpers.py", line 146, in _check_command_response
+    raise OperationFailure(msg % errmsg, code, response)
+OperationFailure: Authentication failed.
