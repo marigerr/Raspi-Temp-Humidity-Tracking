@@ -1,24 +1,15 @@
-import os, json, pygal, ConfigParser, datetime
+import json, pygal, datetime
 from pygal.style import Style
 from bson import json_util, ObjectId
 import pymongo
 from pymongo import MongoClient
 from flask import Flask, render_template
+import settings
 
-configParser = ConfigParser.RawConfigParser()   
-configParser.read(os.path.join(os.path.abspath(os.path.dirname(__file__)), 'config.ini'))
-
-DB_HOST = configParser.get('DATABASE', 'DB_HOST')
-DB_PORT = configParser.getint('DATABASE', 'DB_PORT')
-DB_NAME = configParser.get('DATABASE', 'DB_NAME')
-DB_USER = configParser.get('DATABASE', 'DB_USER')
-DB_PASS = configParser.get('DATABASE', 'DB_PASS')
-DB_COLL = configParser.get('DATABASE', 'DB_COLL')
-
-connection = MongoClient(DB_HOST, DB_PORT)
-db = connection[DB_NAME]
-db.authenticate(DB_USER, DB_PASS)
-collection = db[DB_COLL]
+connection = MongoClient(settings.DB_HOST, settings.DB_PORT)
+db = connection[settings.DB_NAME]
+db.authenticate(settings.DB_USER, settings.DB_PASS)
+collection = db[settings.DB_COLL]
 
 app = Flask(__name__)
 @app.route('/')
@@ -37,7 +28,7 @@ def chart():
     outdoorTemp.append(result['outdoorTemp'])
     outdoorHumidity.append(result['outdoorHumidity'])
     date.append(datetime.datetime.fromtimestamp(result['date']['$date']/1000).strftime('%d %b %H:00'))
-    if (date[len(date)-1].find('12') != -1):
+    if (date[len(date)-1].find('00:00') != -1):
       x_labels_major.append(date[len(date)-1])
 
   custom_style = Style(
