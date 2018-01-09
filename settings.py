@@ -19,6 +19,7 @@ if (hostname == 'MARIGERR-PC' or hostname == 'raspberrypi'):
   MY_LON = configParser.getfloat('LOCATION', 'MY_LON')
   OPEN_WEATHER_KEY = configParser.get('APIKEYS', 'OPEN_WEATHER_KEY')
   LOG_FILE_PATH = configParser.get('LOGGING', 'LOG_FILE_PATH')
+  HOST = 'RASPI'
 else:
   DB_HOST = os.environ.get('DB_HOST')
   DB_PORT = int(os.environ.get('DB_PORT'))
@@ -26,3 +27,4 @@ else:
   DB_USER = os.environ.get('DB_USER')
   DB_PASS = os.environ.get('DB_PASS')
   DB_COLL = os.environ.get('DB_COLL')
+  HOST = 'GLITCH'

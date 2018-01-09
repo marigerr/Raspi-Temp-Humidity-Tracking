@@ -12,6 +12,7 @@ db.authenticate(settings.DB_USER, settings.DB_PASS)
 collection = db[settings.DB_COLL]
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
+
 @app.route('/')
 def chart():
   humidity = []
@@ -48,7 +49,7 @@ def chart():
   current = { 'humidity': humidity[last], 'temp': temp[last], 'outdoorHumidity': outdoorHumidity[last], 'outdoorTemp': outdoorTemp[last], 'date': date[last] }
 
   chart = chart.render_data_uri()
-  return render_template( 'chart.html', chart = chart, current = current)
+  return render_template( 'chart.html', chart = chart, current = current, host = settings.HOST)
 
 @app.route('/latest')
 def current():
