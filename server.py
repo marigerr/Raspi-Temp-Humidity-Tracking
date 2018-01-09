@@ -1,4 +1,4 @@
-import os,json, pygal, datetime
+import os,json, pygal, arrow
 from pygal.style import Style
 from bson import json_util, ObjectId
 import pymongo
@@ -28,7 +28,7 @@ def chart():
     temp.append(result['temp'])
     outdoorTemp.append(result['outdoorTemp'])
     outdoorHumidity.append(result['outdoorHumidity'])
-    date.append(datetime.datetime.fromtimestamp(result['date']['$date']/1000).strftime('%d %b %H:00'))
+    date.append(arrow.get(result['date']['$date']/1000).to('Europe/Stockholm').format('DD MMM HH:00'))
     if (date[len(date)-1].find('00:00') != -1):
       x_labels_major.append(date[len(date)-1])
 
@@ -54,7 +54,7 @@ def chart():
 @app.route('/latest')
 def current():
     current = json.loads(json_util.dumps(collection.find().sort("date", pymongo.DESCENDING).limit(1)))[0]
-    current['date'] = datetime.datetime.fromtimestamp(current['date']['$date']/1000).strftime('%d %b %H:00')
+    current['date'] = arrow.get(result['date']['$date']/1000).to('Europe/Stockholm').format('DD MMM HH:00')
     return render_template( 'latest.html', current = current)
 
 if __name__ == '__main__':
