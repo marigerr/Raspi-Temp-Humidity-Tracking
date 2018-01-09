@@ -4,3 +4,4 @@ pygal
 bson
 pymongo
 arrow
+backports.functools_lru_cache>=1.2.1
