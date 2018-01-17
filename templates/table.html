@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Table{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block content %}
+<div class="flex-center" id="table">
+  {{ chart.render_table(style=True)|safe }}  
+</div>
+{% endblock %}

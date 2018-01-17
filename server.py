@@ -1,4 +1,4 @@
-import os,json, pygal, arrow
+import os,json, pygal, arrow, lxml
 from pygal.style import Style
 from bson import json_util, ObjectId
 import pymongo
@@ -50,6 +50,37 @@ def chart():
 
   chart = chart.render_data_uri()
   return render_template( 'chart.html', chart = chart, current = current, host = settings.HOST)
+
+@app.route('/table')
+def table():
+  humidity = []
+  temp = []
+  outdoorTemp = []
+  outdoorHumidity = []
+  date = []
+  x_labels_major = []
+
+  results = json.loads(json_util.dumps(collection.find().sort([("date", pymongo.DESCENDING)])))
+  for result in results:
+    humidity.append(result['humidity'])
+    temp.append(result['temp'])
+    outdoorTemp.append(result['outdoorTemp'])
+    outdoorHumidity.append(result['outdoorHumidity'])
+    date.append(arrow.get(result['date']['$date']/1000).to('Europe/Stockholm').format('DD MMM HH:00'))
+    if (date[len(date)-1].find('00:00') != -1):
+      x_labels_major.append(date[len(date)-1])
+
+  chart = pygal.Line()
+  chart.x_labels = date
+  chart.x_labels_major = x_labels_major
+  chart.title = 'Humidity & Temperature'
+  chart.add('Temp Indoors (C)', temp)
+  chart.add('Rel Humidity Indoors (%)', humidity)
+  chart.add('Temp Outdoors (C)', outdoorTemp)
+  chart.add('Rel Humidity Outdoors (%)', outdoorHumidity)
+
+  return render_template( 'table.html', chart = chart, current = current, host = settings.HOST)
+
 
 @app.route('/latest')
 def current():
