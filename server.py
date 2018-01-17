@@ -13,7 +13,7 @@ collection = db[settings.DB_COLL]
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
 
-@app.route('/view/chart')
+@app.route('/')
 def chart():
   humidity = []
   temp = []
@@ -51,7 +51,7 @@ def chart():
   chart = chart.render_data_uri()
   return render_template( 'chart.html', chart = chart, current = current, host = settings.HOST)
 
-@app.route('/view/table')
+@app.route('/table')
 def table():
   humidity = []
   temp = []
