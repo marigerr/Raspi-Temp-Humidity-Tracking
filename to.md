@@ -1,0 +1,6 @@
+- config restartable dev server
+- verify production server config
+- add pagination to table
+- fix logging on tracking server
+- have error handling and retry when can't connect to mongodb
+- fix labels so that show date label for everyday no matter if missed 0:00 logging

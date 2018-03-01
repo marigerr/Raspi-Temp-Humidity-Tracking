@@ -22,7 +22,14 @@ def chart():
   date = []
   x_labels_major = []
 
-  results = json.loads(json_util.dumps(collection.find()))
+  ### add pagination later ###
+  # count = collection.find().count()
+  # print(count/21)
+
+  shiftamount = 21
+  threeweeksago = arrow.utcnow().shift(days=-shiftamount).datetime
+
+  results = json.loads(json_util.dumps(collection.find({"date" : { "$gte" : threeweeksago}})))
   for result in results:
     humidity.append(result['humidity'])
     temp.append(result['temp'])
