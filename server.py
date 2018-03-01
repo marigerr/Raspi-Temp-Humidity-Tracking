@@ -5,6 +5,8 @@ import pymongo
 from pymongo import MongoClient
 from flask import Flask, render_template
 import settings
+# import logging
+# logging.basicConfig(level=logging.DEBUG)
 
 connection = MongoClient(settings.DB_HOST, settings.DB_PORT)
 db = connection[settings.DB_NAME]
@@ -36,7 +38,7 @@ def chart():
     outdoorTemp.append(result['outdoorTemp'])
     outdoorHumidity.append(result['outdoorHumidity'])
     date.append(arrow.get(result['date']['$date']/1000).to('Europe/Stockholm').format('DD MMM HH:00'))
-    if (date[len(date)-1].find('00:00') != -1):
+    if (len(x_labels_major) == 0 or x_labels_major[len(x_labels_major)-1][:6] != date[len(date)-1][:6]):
       x_labels_major.append(date[len(date)-1])
 
   custom_style = Style(

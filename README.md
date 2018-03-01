@@ -17,6 +17,12 @@ More info at https://www.raspberrypi.org/documentation/linux/usage/cron.md
 ```
 
 ## View Chart of data
+Start dev server that reloads with saves by navigating to project folderin bash terminal thens
+```
+$ export FLASK_APP=server.py
+$ export FLASK_DEBUG=1
+$ flask run
+```
 Start server with ```python server.py```  
 Can run server on Rasp Pi and then view chart from other machines on local network using Rasp Pi's ip address and default port 5000.
 
